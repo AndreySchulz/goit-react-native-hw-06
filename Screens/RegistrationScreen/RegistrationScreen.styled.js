@@ -1,6 +1,14 @@
 import { StyleSheet, Platform } from "react-native";
 
 export const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+  },
+  image: {
+    flex: 1,
+    justifyContent: "flex-end",
+    resizeMode: "cover",
+  },
   container: {
     position: "relative",
 
@@ -38,6 +46,7 @@ export const styles = StyleSheet.create({
   },
   form: {
     marginHorizontal: 16,
+    marginBottom: 79,
   },
   formInput: {
     height: 50,

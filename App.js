@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -10,7 +10,7 @@ import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import AppLoading from "expo-app-loading";
 import LoginScreen from "./Screens/LoginScreen/LoginScreen";
-import RegistrationScreen from "./Screens/RegistrationScreen/RegistrationScreen";
+import RegisterScreen from "./Screens/RegistrationScreen/RegistrationScreen";
 
 const loadFonts = async () => {
   await Font.loadAsync({
@@ -19,28 +19,8 @@ const loadFonts = async () => {
 };
 
 export default function App() {
-  const [activeKayboard, setActiveKeyboard] = useState(false);
   const [isLoadingFonts, setIsLoadingFonts] = useState(false);
 
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
-      () => {
-        setActiveKeyboard(true);
-      }
-    );
-    const keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
-      () => {
-        setActiveKeyboard(false);
-      }
-    );
-
-    return () => {
-      keyboardDidHideListener.remove();
-      keyboardDidShowListener.remove();
-    };
-  }, []);
   if (!isLoadingFonts) {
     return (
       <AppLoading
@@ -51,39 +31,5 @@ export default function App() {
     );
   }
 
-  return (
-    <View style={styles.container}>
-      <TouchableWithoutFeedback
-        onPress={() => {
-          Keyboard.dismiss();
-          setActiveKeyboard(false);
-        }}
-      >
-        <ImageBackground
-          source={require("./assets/images/photoBg.jpg")}
-          style={styles.image}
-        >
-          {/* <LoginScreen
-            activeKayboard={activeKayboard}
-            setActiveKeyboard={setActiveKeyboard}
-          /> */}
-          <RegistrationScreen
-            activeKayboard={activeKayboard}
-            setActiveKeyboard={setActiveKeyboard}
-          />
-        </ImageBackground>
-      </TouchableWithoutFeedback>
-    </View>
-  );
+  return <RegisterScreen />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  image: {
-    flex: 1,
-    justifyContent: "flex-end",
-    resizeMode: "cover",
-  },
-});
