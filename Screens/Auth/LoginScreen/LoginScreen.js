@@ -10,15 +10,14 @@ import {
   Keyboard,
   ImageBackground,
 } from "react-native";
-import { styles } from "./RegistrationScreen.styled";
+import { styles } from "./LoginScreenStyled";
 
 const initialState = {
-  login: "",
   email: "",
   password: "",
 };
 
-const RegistrationScreen = () => {
+const LoginScreen = ({ navigation }) => {
   const [state, setState] = useState(initialState);
 
   const submit = () => {
@@ -35,29 +34,16 @@ const RegistrationScreen = () => {
         }}
       >
         <ImageBackground
-          source={require("../../assets/images/photoBg.jpg")}
+          source={require("../../../assets/images/photoBg.jpg")}
           style={styles.image}
         >
           <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={-170}
+            behavior={Platform.OS === "ios" ? "padding" : "height - 100px"}
+            keyboardVerticalOffset={-250}
           >
             <View style={styles.container}>
-              <TouchableOpacity
-                style={styles.userPhoto}
-                activeOpacity={0.8}
-              ></TouchableOpacity>
-
-              <Text style={styles.header}>Регистрация</Text>
+              <Text style={styles.header}>Войти</Text>
               <View style={styles.form}>
-                <TextInput
-                  style={styles.formInput}
-                  placeholder={"Логин"}
-                  onChangeText={(value) =>
-                    setState((prevState) => ({ ...prevState, login: value }))
-                  }
-                  value={state.login}
-                />
                 <TextInput
                   style={styles.formInput}
                   placeholder={"Адрес электронной почты"}
@@ -81,10 +67,17 @@ const RegistrationScreen = () => {
                   activeOpacity={0.8}
                   onPress={submit}
                 >
-                  <Text style={styles.formButtonText}>Зарегистрироваться</Text>
+                  <Text style={styles.formButtonText}>Войти</Text>
                 </TouchableOpacity>
 
-                <Text style={styles.fornLink}>Уже есть аккаунт? Войти</Text>
+                <Text
+                  style={styles.fornLink}
+                  onPress={() => {
+                    navigation.navigate("Registration");
+                  }}
+                >
+                  Нет аккаунта? Зарегистрироваться
+                </Text>
               </View>
             </View>
           </KeyboardAvoidingView>
@@ -94,4 +87,4 @@ const RegistrationScreen = () => {
   );
 };
 
-export default RegistrationScreen;
+export default LoginScreen;

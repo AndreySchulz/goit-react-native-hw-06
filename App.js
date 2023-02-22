@@ -1,16 +1,11 @@
 import { useState } from "react";
-import {
-  StyleSheet,
-  View,
-  ImageBackground,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
-import * as Font from "expo-font";
+
 import * as SplashScreen from "expo-splash-screen";
+import * as Font from "expo-font";
+
 import AppLoading from "expo-app-loading";
-import LoginScreen from "./Screens/LoginScreen/LoginScreen";
-import RegisterScreen from "./Screens/RegistrationScreen/RegistrationScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import routes from "./routes";
 
 const loadFonts = async () => {
   await Font.loadAsync({
@@ -20,6 +15,7 @@ const loadFonts = async () => {
 
 export default function App() {
   const [isLoadingFonts, setIsLoadingFonts] = useState(false);
+  const routing = routes({});
 
   if (!isLoadingFonts) {
     return (
@@ -31,5 +27,5 @@ export default function App() {
     );
   }
 
-  return <RegisterScreen />;
+  return <NavigationContainer>{routing}</NavigationContainer>;
 }
