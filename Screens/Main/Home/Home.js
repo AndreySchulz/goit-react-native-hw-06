@@ -25,14 +25,12 @@ const HomeTabs = createBottomTabNavigator();
 const Home = ({ navigation }) => {
   return (
     <HomeTabs.Navigator
-      tabBarOptions={{
-        showLabel: false,
-      }}
       screenOptions={{
         tabBarActiveTintColor: "#FF6C00",
         tabBarStyle: styles.tabBar,
-
         headerRightContainerStyle: styles.exitBtn,
+
+        tabBarShowLabel: false,
       }}
     >
       <HomeTabs.Screen

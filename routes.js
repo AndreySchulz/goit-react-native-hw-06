@@ -6,6 +6,8 @@ import Home from "./Screens/Main/Home/Home";
 import CreatePostsScreen from "./Screens/Main/CreatePostsScreen/CreatePostsScreen";
 import CommentsScreen from "./Screens/Main/CommentsScreen/CommentsScreen";
 
+import { Feather } from "@expo/vector-icons";
+
 const Stack = createNativeStackNavigator();
 
 const routes = (isAuth) => {
