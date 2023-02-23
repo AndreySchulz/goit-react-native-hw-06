@@ -6,43 +6,43 @@ import Home from "./Screens/Main/Home/Home";
 import CreatePostsScreen from "./Screens/Main/CreatePostsScreen/CreatePostsScreen";
 import CommentsScreen from "./Screens/Main/CommentsScreen/CommentsScreen";
 
-const Auth = createNativeStackNavigator();
+const Stack = createNativeStackNavigator();
 
 const routes = (isAuth) => {
   if (!isAuth) {
     return (
-      <Auth.Navigator>
-        <Auth.Screen
+      <Stack.Navigator>
+        <Stack.Screen
           name="Login"
           options={{
             headerShown: false,
           }}
           component={LoginScreen}
         />
-        <Auth.Screen
+        <Stack.Screen
           name="Registration"
           options={{ headerShown: false }}
           component={RegisterScreen}
         />
-      </Auth.Navigator>
+      </Stack.Navigator>
     );
   }
   return (
-    <Auth.Navigator
+    <Stack.Navigator
       screenOptions={{
         headerBackTitleVisible: false,
       }}
     >
-      <Auth.Screen
+      <Stack.Screen
         name="Home"
         options={{
           headerShown: false,
         }}
         component={Home}
       />
-      <Auth.Screen name="Создать публикацию" component={CreatePostsScreen} />
-      <Auth.Screen name="Комментарии" component={CommentsScreen} />
-    </Auth.Navigator>
+      <Stack.Screen name="Создать публикацию" component={CreatePostsScreen} />
+      <Stack.Screen name="Комментарии" component={CommentsScreen} />
+    </Stack.Navigator>
   );
 };
 
