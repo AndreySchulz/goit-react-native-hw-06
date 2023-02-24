@@ -7,6 +7,7 @@ import CreatePostsScreen from "./Screens/Main/CreatePostsScreen/CreatePostsScree
 import CommentsScreen from "./Screens/Main/CommentsScreen/CommentsScreen";
 
 import { Feather } from "@expo/vector-icons";
+import CameraScreen from "./Screens/Main/Camera/Camera";
 
 const Stack = createNativeStackNavigator();
 
@@ -33,7 +34,7 @@ const routes = (isAuth) => {
     <Stack.Navigator
       screenOptions={{
         headerBackTitleVisible: false,
-        // headerTintColor: "black",
+        headerTintColor: "black",
         // headerTransparent: true,
       }}
     >
@@ -45,6 +46,13 @@ const routes = (isAuth) => {
         component={Home}
       />
       <Stack.Screen name="Создать публикацию" component={CreatePostsScreen} />
+      <Stack.Screen
+        name="Camera"
+        component={CameraScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
       <Stack.Screen name="Комментарии" component={CommentsScreen} />
     </Stack.Navigator>
   );

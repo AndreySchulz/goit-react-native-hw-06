@@ -1,5 +1,5 @@
 import { Camera, CameraType } from "expo-camera";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Text,
   View,
@@ -11,65 +11,51 @@ import {
   Keyboard,
   ImageBackground,
   Button,
+  Image,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import { styles } from "./CreatePostsScreenStyled";
-const CreatePostsScreen = () => {
-  const [type, setType] = useState(CameraType.back);
-  const [permission, requestPermission] = Camera.useCameraPermissions();
-  const [isActiveCamera, setIsactiveCamera] = useState(false);
+const CreatePostsScreen = ({ navigation, route }) => {
   const [photo, setPhoto] = useState(null);
 
-  function toggleCameraType() {
-    setType((current) =>
-      current === CameraType.back ? CameraType.front : CameraType.back
-    );
-  }
-  const takePhoto = async () => {
-    console.log(photo.takePictureAsync());
-    setIsactiveCamera(false);
-  };
+  useEffect(() => {
+    if (!route.params) {
+      return;
+    }
+    setPhoto(route.params.photo);
+    console.log(route.params.photo);
+  }, [route.params]);
 
   return (
     <View style={styles.container}>
-      {!isActiveCamera ? (
-        <View style={styles.form}>
-          <TouchableOpacity
-            onPress={() => {
-              requestPermission();
-              if (permission.granted) {
-                setIsactiveCamera(true);
-              }
-            }}
-          >
-            <Text>{photo ? "Редактировать фото" : "Загрузите фото"}</Text>
-          </TouchableOpacity>
-          <TextInput></TextInput>
-          <TextInput></TextInput>
-          <TouchableOpacity>
-            <TextInput>Опубликовать</TextInput>
-          </TouchableOpacity>
-        </View>
-      ) : (
-        <Camera style={styles.camera} type={type} ref={setPhoto}>
-          <View style={styles.cameraBtnBox}>
-            <TouchableOpacity
-              style={styles.cameraBtn}
-              onPress={takePhoto}
-            ></TouchableOpacity>
-            <TouchableOpacity
-              style={styles.togleCameraBtn}
-              onPress={toggleCameraType}
-            >
-              <MaterialIcons
-                name="flip-camera-android"
-                size={24}
-                color="#ffff"
-              />
-            </TouchableOpacity>
+      <View style={styles.form}>
+        <TouchableOpacity
+          style={styles.TapPhotoBox}
+          onPress={() => {
+            navigation.navigate("Camera");
+          }}
+        >
+          <View style={styles.photoBox}>
+            {photo ? (
+              <Image source={{ uri: photo }} style={styles.image}></Image>
+            ) : (
+              <View style={styles.photoBoxIcon}>
+                <Feather name="camera" size={24} color="#BDBDBD" />
+              </View>
+            )}
           </View>
-        </Camera>
-      )}
+
+          <Text>{photo ? "Редактировать фото" : "Загрузите фото"}</Text>
+        </TouchableOpacity>
+        <TextInput placeholder={"Название..."}></TextInput>
+        <TextInput>
+          <Feather name="map-pin" size={24} color="#BDBDBD" />
+        </TextInput>
+        <TouchableOpacity style={styles.confirmBtn}>
+          <Text style={styles.confirmBtnText}>Опубликовать</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
