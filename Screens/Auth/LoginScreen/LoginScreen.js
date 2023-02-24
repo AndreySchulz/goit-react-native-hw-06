@@ -38,7 +38,7 @@ const LoginScreen = ({ navigation }) => {
           style={styles.image}
         >
           <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "height - 100px"}
+            behavior={Platform.OS === "ios" ? "padding" : null}
             keyboardVerticalOffset={-250}
           >
             <View style={styles.container}>

@@ -33,6 +33,8 @@ const routes = (isAuth) => {
     <Stack.Navigator
       screenOptions={{
         headerBackTitleVisible: false,
+        // headerTintColor: "black",
+        // headerTransparent: true,
       }}
     >
       <Stack.Screen
