@@ -3,6 +3,7 @@ import { StyleSheet, Platform } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#fff",
   },
   form: {
     paddingRight: 16,
@@ -40,42 +41,46 @@ export const styles = StyleSheet.create({
     width: "100%",
     flex: 1,
   },
+  labelPhoto: {
+    color: "#BDBDBD",
+    fontSize: 16,
+  },
+  input: {
+    height: 50,
+    borderBottomWidth: 1,
+    borderBottomColor: "#BDBDBD",
+    fontSize: 16,
+    marginTop: 16,
+    justifyContent: "center",
+  },
 
   confirmBtn: {
+    marginTop: 32,
     height: 51,
     borderRadius: 100,
-    backgroundColor: "#FF6C00",
+
     alignItems: "center",
     justifyContent: "center",
+  },
+
+  confirmBtnTextDisable: {
+    color: "#BDBDBD",
   },
   confirmBtnText: {
     color: "#FFFFFF",
   },
-
-  camera: {
+  bottomBox: {
     flex: 1,
-
+    alignItems: "center",
     justifyContent: "flex-end",
+    marginBottom: 40,
   },
-  cameraBtnBox: {
-    position: "relative",
-    width: "100%",
-    paddingBottom: 40,
-    paddingTop: 10,
+  deleteBtn: {
+    width: 70,
+    height: 40,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#0000004d",
-  },
-  cameraBtn: {
-    width: 75,
-    height: 75,
-
-    borderRadius: 100,
-    backgroundColor: "#ffff",
-  },
-  togleCameraBtn: {
-    position: "absolute",
-    right: "15%",
-    top: "35%",
+    borderRadius: 24,
+    backgroundColor: "#F6F6F6",
   },
 });

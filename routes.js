@@ -5,9 +5,8 @@ import RegisterScreen from "./Screens/Auth/RegistrationScreen/RegistrationScreen
 import Home from "./Screens/Main/Home/Home";
 import CreatePostsScreen from "./Screens/Main/CreatePostsScreen/CreatePostsScreen";
 import CommentsScreen from "./Screens/Main/CommentsScreen/CommentsScreen";
-
-import { Feather } from "@expo/vector-icons";
 import CameraScreen from "./Screens/Main/Camera/Camera";
+import MapScreen from "./Screens/Main/MapScreen/MapScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -35,7 +34,6 @@ const routes = (isAuth) => {
       screenOptions={{
         headerBackTitleVisible: false,
         headerTintColor: "black",
-        // headerTransparent: true,
       }}
     >
       <Stack.Screen
@@ -51,9 +49,11 @@ const routes = (isAuth) => {
         component={CameraScreen}
         options={{
           headerShown: false,
+          gestureDirection: "vertical",
         }}
       />
       <Stack.Screen name="Комментарии" component={CommentsScreen} />
+      <Stack.Screen name="Карта" component={MapScreen} />
     </Stack.Navigator>
   );
 };
