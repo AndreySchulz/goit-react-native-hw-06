@@ -7,11 +7,15 @@ import CreatePostsScreen from "./Screens/Main/CreatePostsScreen/CreatePostsScree
 import CommentsScreen from "./Screens/Main/CommentsScreen/CommentsScreen";
 import CameraScreen from "./Screens/Main/Camera/Camera";
 import MapScreen from "./Screens/Main/MapScreen/MapScreen";
+import { useSelector } from "react-redux";
+import { getUser } from "./redux/auth/authSelector";
 
 const Stack = createNativeStackNavigator();
 
-const routes = (isAuth) => {
-  if (!isAuth) {
+const Routes = () => {
+  const userData = useSelector(getUser);
+
+  if (!userData) {
     return (
       <Stack.Navigator>
         <Stack.Screen
@@ -23,7 +27,7 @@ const routes = (isAuth) => {
         />
         <Stack.Screen
           name="Registration"
-          options={{ headerShown: false }}
+          options={{ headerShown: false, gestureDirection: "vertical" }}
           component={RegisterScreen}
         />
       </Stack.Navigator>
@@ -58,4 +62,4 @@ const routes = (isAuth) => {
   );
 };
 
-export default routes;
+export default Routes;
