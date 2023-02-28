@@ -11,15 +11,32 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "./redux/auth/authSelector";
 import { authState } from "./redux/auth/authOperation";
 import { useEffect } from "react";
+import { auth } from "./firebase/config";
+import { onAuthStateChanged } from "firebase/auth";
+import { refreshState } from "./redux/auth/authReducer";
 
 const Stack = createNativeStackNavigator();
 
 const Routes = () => {
   const userData = useSelector(getUser);
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (!userData) {
-      dispatch(authState());
+      onAuthStateChanged(auth, (user) => {
+        if (!user) {
+          return;
+        }
+
+        const userData = {
+          accessToken: user.accessToken,
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+          emailVerified: user.emailVerified,
+        };
+        dispatch(refreshState(userData));
+      });
     }
   }, []);
 

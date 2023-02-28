@@ -14,8 +14,9 @@ const authSlice = createSlice({
     stateChange: null,
   },
   reducers: {
-    refreshState: (state, action) => {
-      console.log(action);
+    refreshState(state, { payload }) {
+      return { ...state, user: payload };
+
       // state.user = payload;
     },
   },
@@ -32,10 +33,6 @@ const authSlice = createSlice({
     });
     builder.addCase(userSignOut.fulfilled, (state) => {
       state.user = null;
-    });
-    builder.addCase(authState.fulfilled, (state, { payload }) => {
-      // console.log(payload);
-      // state.user = payload;
     });
   },
 });
