@@ -10,6 +10,8 @@ import {
   Keyboard,
   ImageBackground,
 } from "react-native";
+import { useDispatch } from "react-redux";
+import { signUp } from "../../../redux/auth/authOperation";
 import { styles } from "./RegistrationScreenStyled";
 
 const initialState = {
@@ -20,10 +22,12 @@ const initialState = {
 
 const RegistrationScreen = ({ navigation }) => {
   const [state, setState] = useState(initialState);
+  const dispatch = useDispatch();
 
   const submit = () => {
     Keyboard.dismiss();
-    console.log(state);
+
+    dispatch(signUp(state));
     setState(initialState);
   };
 

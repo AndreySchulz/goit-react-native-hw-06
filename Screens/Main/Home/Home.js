@@ -7,10 +7,13 @@ import PostsScreen from "../PostsScreen/PostsScreen";
 import ProfileScreen from "../ProfileScreen/ProfileScreen";
 import CreatePostsScreen from "../CreatePostsScreen/CreatePostsScreen";
 import { styles } from "./HomeStyled";
+import { useDispatch } from "react-redux";
+import { userSignOut } from "../../../redux/auth/authOperation";
 
 const HomeTabs = createBottomTabNavigator();
 
 const Home = ({ navigation }) => {
+  const dispatch = useDispatch();
   return (
     <HomeTabs.Navigator
       screenOptions={{
@@ -33,7 +36,7 @@ const Home = ({ navigation }) => {
               name="exit-outline"
               size={24}
               color="black"
-              onPress={() => alert("This is a button!")}
+              onPress={() => dispatch(userSignOut())}
             />
           ),
         }}
