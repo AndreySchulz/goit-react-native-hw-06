@@ -9,7 +9,7 @@ import CameraScreen from "./Screens/Main/Camera/Camera";
 import MapScreen from "./Screens/Main/MapScreen/MapScreen";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "./redux/auth/authSelector";
-import { authState } from "./redux/auth/authOperation";
+
 import { useEffect } from "react";
 import { auth } from "./firebase/config";
 import { onAuthStateChanged } from "firebase/auth";
@@ -27,15 +27,7 @@ const Routes = () => {
         if (!user) {
           return;
         }
-
-        const userData = {
-          accessToken: user.accessToken,
-          uid: user.uid,
-          displayName: user.displayName,
-          email: user.email,
-          emailVerified: user.emailVerified,
-        };
-        dispatch(refreshState(userData));
+        dispatch(refreshState(user));
       });
     }
   }, []);

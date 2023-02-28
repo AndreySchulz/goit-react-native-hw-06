@@ -1,45 +1,46 @@
-import { Camera, CameraType } from "expo-camera";
 import { useState, useEffect } from "react";
-import {
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Platform,
-  KeyboardAvoidingView,
-  TouchableWithoutFeedback,
-  Keyboard,
-  ImageBackground,
-  Button,
-  Image,
-} from "react-native";
+import { Text, View, TextInput, TouchableOpacity, Image } from "react-native";
 
 import { Feather } from "@expo/vector-icons";
 import { styles } from "./CreatePostsScreenStyled";
-
-const initialState = {
-  photo: "",
-  label: "",
-  location: "",
-};
+import { db, storage } from "../../../firebase/config";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { useSelector } from "react-redux";
+import { getUser } from "../../../redux/auth/authSelector";
+import { addDoc, collection } from "firebase/firestore";
 
 const CreatePostsScreen = ({ navigation, route }) => {
   const [photo, setPhoto] = useState(null);
   const [location, setLocation] = useState(null);
-  const [form, setForm] = useState(initialState);
-  const [disabledBtn, setDisabledBtn] = useState(true);
+  const [label, setLabel] = useState("");
+  const [disabledBtn, setDisabledBtn] = useState(false);
 
-  const submitForm = () => {
-    console.log(form);
-    setForm(initialState);
+  const { uid, displayName } = useSelector(getUser);
+
+  const submitForm = async () => {
+    const responce = await (await fetch(photo)).blob();
+    const postId = Date.now().toString();
+    const storageRef = ref(storage, `postImages/${postId}`);
+    await uploadBytes(storageRef, responce);
+    const photoURL = await getDownloadURL(storageRef);
+
+    await addDoc(collection(db, "posts"), {
+      uid,
+      displayName,
+      photoURL,
+      label,
+      location,
+    });
+
     setPhoto(null);
-    // navigation.navigate("Публикации");
+
+    navigation.navigate("Публикации");
   };
-  useEffect(() => {
-    if (form.label && form.photo) {
-      setDisabledBtn(false);
-    }
-  }, [form]);
+  // useEffect(() => {
+  //   if (form.label && form.photo) {
+  //     setDisabledBtn(false);
+  //   }
+  // }, [form]);
 
   useEffect(() => {
     if (!route.params) {
@@ -47,13 +48,8 @@ const CreatePostsScreen = ({ navigation, route }) => {
     }
     if (route.params.location) {
       setLocation(route.params.location);
-      setForm((prevState) => ({
-        ...prevState,
-        location: route.params.location,
-      }));
     }
     setPhoto(route.params.photo);
-    setForm((prevState) => ({ ...prevState, photo: route.params.photo }));
   }, [route.params]);
 
   return (
@@ -81,20 +77,15 @@ const CreatePostsScreen = ({ navigation, route }) => {
         </TouchableOpacity>
         <TextInput
           placeholder={"Название..."}
-          onChangeText={(value) =>
-            setForm((prevState) => ({
-              ...prevState,
-              label: value,
-            }))
-          }
-          value={form.label}
+          onChangeText={(value) => setLabel(value)}
+          value={label}
           style={styles.input}
         ></TextInput>
         <TouchableOpacity
           style={styles.input}
           activeOpacity={0.9}
           onPress={() => {
-            navigation.navigate("Карта", { location });
+            navigation.navigate("Карта", location);
           }}
         >
           <Feather name="map-pin" size={24} color="#BDBDBD" />
@@ -116,7 +107,7 @@ const CreatePostsScreen = ({ navigation, route }) => {
         <TouchableOpacity
           style={styles.deleteBtn}
           onPress={() => {
-            setForm(initialState);
+            // setForm(initialState);
             setPhoto(null);
           }}
         >

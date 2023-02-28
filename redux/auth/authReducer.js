@@ -1,11 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  signUp,
-  signIn,
-  updateUser,
-  userSignOut,
-  authState,
-} from "./authOperation";
+
+import { signUp, signIn, updateUser, userSignOut } from "./authOperation";
 
 const authSlice = createSlice({
   name: "auth",
@@ -15,9 +10,8 @@ const authSlice = createSlice({
   },
   reducers: {
     refreshState(state, { payload }) {
+      console.log(payload);
       return { ...state, user: payload };
-
-      // state.user = payload;
     },
   },
   extraReducers: (builder) => {

@@ -1,22 +1,10 @@
 import MapView, { Marker } from "react-native-maps";
-import {
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Platform,
-  KeyboardAvoidingView,
-  TouchableWithoutFeedback,
-  Keyboard,
-  ImageBackground,
-  Button,
-  Image,
-} from "react-native";
+import { View } from "react-native";
 import { styles } from "./MapScreenStyled";
 import { useState } from "react";
 
 const MapScreen = ({ navigation, route }) => {
-  let location = route.params.location;
+  const [location, setLocation] = useState(route.params);
 
   const [region, setRegion] = useState({
     latitude: location.latitude,
