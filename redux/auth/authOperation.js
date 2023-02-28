@@ -1,14 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit/dist";
-
+import { auth } from "../../firebase/config";
 import {
-  getAuth,
   updateProfile,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  onAuthStateChanged,
   signOut,
 } from "firebase/auth";
-
-import { auth } from "../../firebase/config";
+import { useDispatch } from "react-redux";
+import { refreshState } from "./authReducer";
 
 export const signUp = createAsyncThunk(
   "auth/signup",
@@ -19,7 +19,7 @@ export const signUp = createAsyncThunk(
         email,
         password
       );
-      updateProfile(auth.currentUser, {
+      await updateProfile(auth.currentUser, {
         displayName: login,
       });
 
@@ -54,6 +54,34 @@ export const updateUser = createAsyncThunk(
     }
   }
 );
+
+export const authState = createAsyncThunk(
+  "user/authstate",
+  async (_, { rejectWithValue }) => {
+    const dispatch = useDispatch();
+    try {
+      onAuthStateChanged(auth, (user) => {
+        if (!user) {
+          return;
+        }
+
+        const userData = {
+          accessToken: user.accessToken,
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+          emailVerified: user.emailVerified,
+        };
+        dispatch(refreshState(_, userData));
+      });
+
+      //
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 export const userSignOut = createAsyncThunk(
   "user/signout",
   async (_, { rejectWithValue }) => {

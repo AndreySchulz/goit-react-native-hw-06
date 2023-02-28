@@ -7,13 +7,21 @@ import CreatePostsScreen from "./Screens/Main/CreatePostsScreen/CreatePostsScree
 import CommentsScreen from "./Screens/Main/CommentsScreen/CommentsScreen";
 import CameraScreen from "./Screens/Main/Camera/Camera";
 import MapScreen from "./Screens/Main/MapScreen/MapScreen";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "./redux/auth/authSelector";
+import { authState } from "./redux/auth/authOperation";
+import { useEffect } from "react";
 
 const Stack = createNativeStackNavigator();
 
 const Routes = () => {
   const userData = useSelector(getUser);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (!userData) {
+      dispatch(authState());
+    }
+  }, []);
 
   if (!userData) {
     return (

@@ -14,6 +14,7 @@ const HomeTabs = createBottomTabNavigator();
 
 const Home = ({ navigation }) => {
   const dispatch = useDispatch();
+  
   return (
     <HomeTabs.Navigator
       screenOptions={{
